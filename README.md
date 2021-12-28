@@ -19,7 +19,7 @@ This repository containts an Ethereum DApp that demonstrates a Supply Chain flow
 ## Libraries Used
 
 web3.js : it allows to interact with a local or remote ethereum node 
-truffle-hd-wallet-provider: used to sign transactions for addresses
+truffle-hdwallet-provider: used to sign transactions for addresses
 
 ## IPFS
 IPFS ws not used in this project
@@ -28,6 +28,9 @@ IPFS ws not used in this project
 
 ### truffle
 v4.1.14
+
+### truffle-hdwallet-provider
+1.0.17
 
 ### solidity
 0.4.24
