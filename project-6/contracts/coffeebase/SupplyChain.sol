@@ -77,11 +77,11 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, Cons
   //   _;
   // }
 
-  // // Define a modifer that verifies the Caller
-  // modifier verifyCaller (address _address) {
-  //   require(msg.sender == _address); 
-  //   _;
-  // }
+  // Define a modifer that verifies the Caller
+  modifier verifyCaller (address _address) {
+    require(msg.sender == _address); 
+    _;
+  }
 
   // Define a modifier that checks if the paid amount is sufficient to cover the price
   modifier paidEnough(uint _price) { 
@@ -164,6 +164,8 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, Cons
 
   // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'
   function harvestItem(uint _upc, address _originFarmerID, string _originFarmName, string _originFarmInformation, string  _originFarmLatitude, string  _originFarmLongitude, string  _productNotes) public 
+  onlyFarmer
+  verifyCaller(items[_upc].ownerID)
   {
     // Add the new item as part of Harvest
     items[_upc] = Item({
@@ -196,6 +198,7 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, Cons
   harvested(_upc)
   // Call modifier to verify caller of this function
   onlyFarmer
+  verifyCaller(items[_upc].ownerID)
   {
     // Update the appropriate fields
     items[_upc].itemState=State.Processed;
@@ -209,6 +212,7 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, Cons
   processed(_upc)
   // Call modifier to verify caller of this function
   onlyFarmer
+  verifyCaller(items[_upc].ownerID)
   {
     // Update the appropriate fields
     items[_upc].itemState=State.Packed;
@@ -222,6 +226,7 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, Cons
   packed(_upc)
   // Call modifier to verify caller of this function
   onlyFarmer
+  verifyCaller(items[_upc].ownerID)
   {
     // Update the appropriate fields
     items[_upc].itemState=State.ForSale;
@@ -260,6 +265,7 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, Cons
     sold(_upc)
     // Call modifier to verify caller of this function
     onlyDistributor
+    verifyCaller(items[_upc].ownerID)
     {
     // Update the appropriate fields
     items[_upc].itemState=State.Shipped;
